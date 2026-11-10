@@ -1,0 +1,108 @@
+
+<div class="page-wrap">
+
+  <section class="chat-card">
+
+    <!-- HEADER -->
+    <header class="chat-header">
+
+      <div class="brand">
+        <div class="brand-icon">💬</div>
+
+        <div>
+          <h1>Live Chat</h1>
+          <p>Socket.IO Messenger</p>
+        </div>
+      </div>
+
+      <div class="room-badge">
+        <span class="status-dot"></span>
+        Chat room
+      </div>
+
+    </header>
+
+    <!-- USERNAME -->
+    <div class="profile-bar">
+
+      <label for="username">YOUR DISPLAY NAME</label>
+
+      <input
+        id="username"
+        type="text"
+        name="username"
+        [(ngModel)]="username"
+        placeholder="Enter your name"
+        maxlength="32"
+        autocomplete="off"
+      />
+
+    </div>
+
+    <!-- MESSAGES -->
+    <div class="chat-messages" role="log"
+         aria-live="polite">
+
+      @if (messages.length === 0) {
+        <div class="empty-state">
+          <div class="empty-icon">💬</div>
+          <h3>No messages yet</h3>
+          <p>Start a conversation!</p>
+        </div>
+      }
+
+      <div
+        *ngFor="let msg of messages"
+        class="message-row"
+        [class.mine]="msg.username === username.trim()">
+
+        <div class="message-avatar">
+          {{ msg.username.charAt(0).toUpperCase() }}
+        </div>
+
+        <div class="message-content">
+
+          <span class="message-name">
+            {{ msg.username }}
+          </span>
+
+          <div class="message-bubble">
+            {{ msg.text }}
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- SEND MESSAGE -->
+    <form class="chat-composer"
+          (ngSubmit)="send()">
+
+      <input
+        type="text"
+        name="draft"
+        [(ngModel)]="draft"
+        placeholder="Type your message..."
+        autocomplete="off"
+      />
+
+      <button
+        type="submit"
+        [disabled]="!username.trim() || !draft.trim()">
+
+        Send
+        <span>➤</span>
+
+      </button>
+
+    </form>
+
+    <div class="chat-footer">
+      Real-time messaging powered by Socket.IO
+    </div>
+
+  </section>
+
+</div>
